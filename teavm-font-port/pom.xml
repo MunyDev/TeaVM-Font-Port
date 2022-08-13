@@ -5,4 +5,58 @@
   <version>A1.0.0</version>
   <name>TeaVM Font Port</name>
   <description>Port web fonts to WebGL and other frameworks</description>
+  
+  
+  <dependencies>
+  	<dependency>
+  		<groupId>org.teavm</groupId>
+  		<artifactId>teavm-classlib</artifactId>
+  		 <version>0.7.0</version>
+  	
+  	</dependency>
+  
+  	<dependency>
+  		<groupId>org.teavm</groupId>
+  		<artifactId>teavm-jso</artifactId>
+  		<version>0.7.0</version>
+  	
+  	</dependency>
+  	<dependency>
+  		<groupId>org.teavm</groupId>
+  		<artifactId>teavm-jso-apis</artifactId>
+  		<version>0.7.0</version>
+  	
+  	</dependency>
+  	<dependency>
+  	<groupId>org.munydev.ports</groupId>
+  <artifactId>lwjgl</artifactId>
+  <version>A1.0.6</version>
+  	
+  	</dependency>
+  </dependencies>
+  
+  <build>
+  	<plugins>
+  		<plugin>
+  			<groupId>org.teavm</groupId>
+  			<artifactId>teavm-maven-plugin</artifactId>
+  			<version>0.7.0</version>
+  			
+  			
+  			<configuration>
+  				
+  				<mainClass>org.munydev.teavm.font.Client</mainClass>
+  				<incremental>false</incremental>
+  				<sourceFilesCopied>true</sourceFilesCopied>
+  				<entryPointName>initiateFont</entryPointName>
+  				<optimizationLevel>ADVANCED</optimizationLevel>
+  				<minifying>true</minifying>
+  				<targetDirectory>${project.build.directory}\html</targetDirectory>
+  				<targetFileName>classes.js</targetFileName>
+  				<targetType>JAVASCRIPT</targetType>
+  			</configuration>
+  		</plugin>
+  	
+  	</plugins>
+  </build>
 </project>
