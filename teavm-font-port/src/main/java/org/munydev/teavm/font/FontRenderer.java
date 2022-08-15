@@ -6,13 +6,15 @@ public abstract class FontRenderer {
 	
 	public abstract void drawString(int x, int y, String text);
 	public abstract void onInititalize(FontCompletionCallback fcc);
-	public static FontGlyph createFontGlyph(int x, int y, int w, int h, int advance) {
+	public static FontGlyph createFontGlyph(float x, float y, float f, float h, float g, float asc, float desc) {
 		FontGlyph fg = JSObjects.create();
-		fg.setAdvance(advance);
+		fg.setAdvance(g);
 		fg.setHeight(h);
-		fg.setWidth(w);
+		fg.setWidth(f);
 		fg.setX(x);
 		fg.setY(y);
+		fg.setAscent(asc);
+		fg.setDescent(desc);
 		return fg;
 	}
 }

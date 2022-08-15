@@ -5,24 +5,33 @@ import org.teavm.jso.JSProperty;
 
 public interface FontGlyph extends JSObject {
 	@JSProperty
-	void setWidth(int w);
+	void setWidth(float w);
 	@JSProperty
-	void setHeight(int h);
+	void setHeight(float h);
 	@JSProperty
-	void setX(int xpos);
+	void setX(float xpos);
 	@JSProperty
-	void setY(int ypos);
+	void setY(float ypos);
 	@JSProperty
-	void setAdvance(int advance);
+	void setAdvance(float advance);
+	@JSProperty
+	void setAscent(float ascent);
+	@JSProperty
+	void setDescent(float descent);
 	
 	@JSProperty
-	int getWidth();
+	float getAscent();
 	@JSProperty
-	int getHeight();
+	float getDescent();
+	
 	@JSProperty
-	int getX();
+	float getWidth();
 	@JSProperty
-	int getY();
+	float getHeight();
 	@JSProperty
-	int getAdvance();
+	float getX();
+	@JSProperty
+	float getY();
+	@JSProperty
+	float getAdvance();
 }
