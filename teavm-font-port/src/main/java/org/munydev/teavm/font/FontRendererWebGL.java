@@ -8,6 +8,7 @@ import org.munydev.teavm.lwjgl.CurrentContext;
 import org.teavm.jso.canvas.CanvasRenderingContext2D;
 import org.teavm.jso.canvas.ImageData;
 import org.teavm.jso.core.JSArray;
+import org.teavm.jso.core.JSObjects;
 import org.teavm.jso.core.JSString;
 import org.teavm.jso.dom.html.HTMLCanvasElement;
 import org.teavm.jso.dom.html.HTMLDocument;
@@ -21,14 +22,14 @@ public class FontRendererWebGL extends FontRenderer {
 	int cWidth, cHeight;
 	int textureID;
 	CanvasRenderingContext2D ctxGlob;
-	public FontRendererWebGL(String name, String cssSize, String style, int cWidth, int cHeight) {
+	public FontRendererWebGL(String name, String cssSize, String style, int cWidth, int cHeight, String cssColor) {
 		HTMLCanvasElement hce = (HTMLCanvasElement) HTMLDocument.current().createElement("canvas");
 		hce.setWidth(cWidth);
 		hce.setHeight(cHeight);
 		this.cWidth = cWidth;
 		this.cHeight = cHeight;
 		CanvasRenderingContext2D ctx = (CanvasRenderingContext2D) hce.getContext("2d");
-		ctx.setFont(cssSize+" "+name);
+		ctx.setFont(style+" "+cssSize+" "+name);
 		ctx.setTextAlign("left");
 		this.ctxGlob = ctx;
 //		ctx.setTextBaseline("top");
@@ -36,7 +37,7 @@ public class FontRendererWebGL extends FontRenderer {
 		float y = 0;
 		float maxLineHeight = 0;
 //		int curAdvance = 0;
-		ctx.setFillStyle("#FFFFFF");
+		ctx.setFillStyle(cssColor);
 		
 		System.out.println(ctx.getFont());
 		for (int i = 32; i < 128; i++) {
@@ -81,6 +82,9 @@ public class FontRendererWebGL extends FontRenderer {
 	@Override
 	public void drawString(int x, int y, String text) {
 		// TODO Auto-generated method stub
+		if (text.length() <= 0 || text.length() > 255) {
+			return;
+		}
 		GL11.glBindTexture(GL_TEXTURE_2D, textureID);
 		TextMetrics tm = (TextMetrics)  ctxGlob.measureText(text);
 		float baseline = tm.getActualBoundingBoxAscent();
@@ -89,7 +93,7 @@ public class FontRendererWebGL extends FontRenderer {
 		GL11.glBegin(GL_TRIANGLES);
 		
 		for (int c : text.toCharArray()) {
-			
+			if (fg.get(c) == JSObjects.undefined()) continue;
 			float tx1 = (float) fg.get(c).getX() / (float) cWidth;
 			float ty1 = (float) fg.get(c).getY() / (float) cHeight;
 			float tx2 = (float) (fg.get(c).getX()+fg.get(c).getWidth()) / (float) cWidth;
